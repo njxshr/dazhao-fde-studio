@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primitive palette */
+  --pine-950: oklch(0.255 0.035 176);
+  --pine-900: oklch(0.305 0.04 176);
+  --pine-800: oklch(0.38 0.045 176);
+  --sage-100: oklch(0.93 0.018 139);
+  --sage-50: oklch(0.97 0.012 139);
+  --paper: oklch(0.985 0.006 139);
+  --ink-900: oklch(0.25 0.025 176);
+  --ink-700: oklch(0.42 0.025 176);
+  --ink-500: oklch(0.52 0.02 176);
+  --signal-600: oklch(0.61 0.18 42);
+  --signal-500: oklch(0.68 0.18 45);
+  --line: oklch(0.86 0.018 139);
+
+  /* Semantic tokens */
+  --surface-page: var(--sage-50);
+  --surface-raised: var(--paper);
+  --surface-muted: var(--sage-100);
+  --surface-inverse: var(--pine-950);
+  --text-primary: var(--ink-900);
+  --text-secondary: var(--ink-700);
+  --text-inverse: var(--sage-50);
+  --accent-primary: var(--signal-500);
+  --accent-hover: var(--signal-600);
+  --border-subtle: var(--line);
+
+  /* Component tokens */
+  --button-bg: var(--pine-950);
+  --button-text: var(--sage-50);
+  --button-accent-bg: var(--signal-500);
+  --button-accent-text: var(--pine-950);
+  --dialog-bg: var(--paper);
+
+  /* shadcn compatibility */
+  --background: 90 17% 96%;
+  --foreground: 175 18% 17%;
+  --border: 100 10% 85%;
+  --input: 100 10% 85%;
+  --ring: 25 78% 57%;
+  --radius: 0.75rem;
+
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  color: var(--text-primary);
+  background: var(--surface-page);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100dvh;
+  background: var(--surface-page);
+  color: var(--text-primary);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg {
+  display: block;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+button:focus-visible,
+a:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--accent-primary);
+  outline-offset: 4px;
+}
+
+::selection {
+  background: var(--accent-primary);
+  color: var(--pine-950);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
