@@ -13,6 +13,7 @@ import {
   MapPin,
   Menu,
   MessageSquare,
+  Moon,
   Network,
   QrCode,
   Sun,
@@ -167,12 +168,12 @@ export default function Home() {
   const [showIntro, setShowIntro] = useState(() => !window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const [theme, setTheme] = useState<'brand' | 'white'>(() => document.documentElement.dataset.theme === 'white' ? 'white' : 'brand')
   const toastTimer = useRef<number | undefined>(undefined)
-  const progressRef = useRef<HTMLDivElement>(null)
+  const scaleFieldRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (theme === 'white') document.documentElement.dataset.theme = 'white'
     else document.documentElement.removeAttribute('data-theme')
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'white' ? '#fcfdfc' : '#173c35')
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'white' ? '#f7faf7' : '#102d27')
     try {
       localStorage.setItem('dazhao-fde-theme', theme)
     } catch {
@@ -197,21 +198,51 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
+    const field = scaleFieldRef.current
+    if (!field) return
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)')
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
-    let frame = 0
-    const updateProgress = () => {
-      frame = 0
-      const distance = document.documentElement.scrollHeight - window.innerHeight
-      const progress = distance > 0 ? Math.min(window.scrollY / distance, 1) : 0
-      if (progressRef.current) progressRef.current.style.transform = `scaleX(${progress})`
+    if (!finePointer.matches || reducedMotion.matches) {
+      field.dataset.enabled = 'false'
+      return
     }
-    const requestProgress = () => {
-      if (!frame) frame = window.requestAnimationFrame(updateProgress)
-    }
-    updateProgress()
-    window.addEventListener('scroll', requestProgress, { passive: true })
-    window.addEventListener('resize', requestProgress)
 
+    field.dataset.enabled = 'true'
+    let frame = 0
+    let latest: { x: number; y: number } | null = null
+    const renderPointer = () => {
+      frame = 0
+      if (!latest) return
+      const xRatio = latest.x / window.innerWidth - 0.5
+      const yRatio = latest.y / window.innerHeight - 0.5
+      field.style.setProperty('--pointer-x', `${latest.x}px`)
+      field.style.setProperty('--pointer-y', `${latest.y}px`)
+      field.style.setProperty('--scale-shift-x', `${xRatio * 24}px`)
+      field.style.setProperty('--scale-shift-y', `${yRatio * 24}px`)
+      field.dataset.active = 'true'
+    }
+    const onPointerMove = (event: PointerEvent) => {
+      if (event.pointerType !== 'mouse') return
+      latest = { x: event.clientX, y: event.clientY }
+      if (!frame) frame = window.requestAnimationFrame(renderPointer)
+    }
+    const onPointerLeave = () => {
+      latest = null
+      if (frame) window.cancelAnimationFrame(frame)
+      frame = 0
+      field.dataset.active = 'false'
+    }
+    window.addEventListener('pointermove', onPointerMove, { passive: true })
+    document.documentElement.addEventListener('pointerleave', onPointerLeave)
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame)
+      window.removeEventListener('pointermove', onPointerMove)
+      document.documentElement.removeEventListener('pointerleave', onPointerLeave)
+    }
+  }, [])
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     const revealElements = [...document.querySelectorAll<HTMLElement>('[data-reveal]')]
     let observer: IntersectionObserver | undefined
     if (!reducedMotion.matches) {
@@ -226,13 +257,7 @@ export default function Home() {
     } else {
       revealElements.forEach((element) => element.classList.add('is-revealed'))
     }
-
-    return () => {
-      if (frame) window.cancelAnimationFrame(frame)
-      observer?.disconnect()
-      window.removeEventListener('scroll', requestProgress)
-      window.removeEventListener('resize', requestProgress)
-    }
+    return () => observer?.disconnect()
   }, [])
 
   const notify = (message: string) => {
@@ -297,7 +322,10 @@ export default function Home() {
         </div>
       )}
       <a className="skip-link" href="#main">跳到主要内容</a>
-      <div className="scroll-progress" aria-hidden="true"><div ref={progressRef} /></div>
+      <div ref={scaleFieldRef} className="pointer-scales" data-active="false" aria-hidden="true">
+        <div className="pointer-scales-base" />
+        <div className="pointer-scales-lens"><div className="pointer-scales-plane" /></div>
+      </div>
       <header className="site-header">
         <div className="site-shell header-inner">
           <a className="brand" href="#top" aria-label="大钊 FDE 工作室，返回首页">
@@ -310,13 +338,13 @@ export default function Home() {
           <button
             className="theme-toggle"
             type="button"
-            aria-label="白色主题"
+            aria-label={theme === 'white' ? '暗色主题' : '白色主题'}
             aria-pressed={theme === 'white'}
-            title={theme === 'white' ? '白色主题已开启，点击恢复品牌主题' : '点击切换到白色主题'}
+            title={theme === 'white' ? '当前为白色主题，点击切换到暗色主题' : '当前为暗色主题，点击切换到白色主题'}
             onClick={() => setTheme((current) => current === 'white' ? 'brand' : 'white')}
           >
-            <Sun size={17} aria-hidden="true" />
-            <span>白色主题</span>
+            {theme === 'white' ? <Moon size={17} aria-hidden="true" /> : <Sun size={17} aria-hidden="true" />}
+            <span>{theme === 'white' ? '暗色主题' : '白色主题'}</span>
           </button>
           <button className="header-contact header-contact-button" type="button" onClick={() => setWechatOpen(true)}>
             来聊聊 <ArrowUpRight size={17} aria-hidden="true" />
@@ -346,15 +374,6 @@ export default function Home() {
 
       <main id="main">
         <section id="top" className="hero site-shell" aria-labelledby="hero-title">
-          <div className="hero-atmosphere" aria-hidden="true">
-            <span className="ambient-grid" />
-            <span className="ambient-orb ambient-orb-one" />
-            <span className="ambient-orb ambient-orb-two" />
-            <span className="ambient-scan" />
-            <span className="ambient-node ambient-node-one" />
-            <span className="ambient-node ambient-node-two" />
-            <span className="ambient-node ambient-node-three" />
-          </div>
           <div className="hero-copy">
             <div className="hero-kicker hero-enter hero-enter-one">
               <span><MapPin size={15} aria-hidden="true" />内蒙古 · 呼和浩特</span>
