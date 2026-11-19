@@ -145,31 +145,4 @@ export const timeline = [
   },
 ]
 
-export const publicNotes = [
-  {
-    year: '2017—2018',
-    title: '早期代码与学习足迹',
-    source: 'GitHub · codes',
-    href: 'https://github.com/njxshr/codes',
-  },
-  {
-    year: '2019',
-    title: 'CNN 卷积算法应用——手写数字识别',
-    source: '腾讯云开发者社区',
-    href: 'https://cloud.tencent.com/developer/article/1415106',
-  },
-  {
-    year: '2020',
-    title: '北极星指标',
-    source: '腾讯云开发者社区',
-    href: 'https://cloud.tencent.com/developer/article/1685703',
-  },
-  {
-    year: '2022',
-    title: 'Quest 2 网络排障回答',
-    source: '知乎',
-    href: 'https://www.zhihu.com/question/459007821/answer/2397645494',
-  },
-]
-
 export const introText = '我叫李钊，专注企业AI解决方案、Agent应用、企业办公智能化及FDE场景落地，具备AI场景挖掘、业务系统集成与FDE方法建设经验。自2017年起工作，拥有9年企业级软件与数字化经验，曾任解决方案总监、云平台产品经理、软件开发负责人，具备产品线规划、研发团队管理，以及数据中台、ETL数据集成和规则引擎相关研发设计经验。我关注如何把业务需求转化为可交付的产品与方案，并通过FDE手册、培训和工具沉淀为可复用能力。'
