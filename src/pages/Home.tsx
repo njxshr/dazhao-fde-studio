@@ -478,7 +478,12 @@ export default function Home() {
               <div>
                 <h2 id="library-title">把想清楚的，<br />写成能带走的。</h2>
               </div>
-              <p>三本个人知识作品，保留完整内容，也保留事实、案例与推演的边界。选择一本，带走慢慢读。</p>
+              <p>
+                三本个人知识作品，保留完整内容，也保留事实、案例与推演的边界。选择一本，带走慢慢读。
+                <a className="library-repo-link" href="https://github.com/njxshr/ruogu-books" target="_blank" rel="noreferrer" aria-label="在 GitHub 查看书稿仓库（新窗口打开）">
+                  在 GitHub 查看书稿 <ArrowUpRight size={17} aria-hidden="true" />
+                </a>
+              </p>
             </header>
             <div className="library-list">
               {libraryBooks.map((book, index) => (
