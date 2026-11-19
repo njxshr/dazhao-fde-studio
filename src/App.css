@@ -1527,6 +1527,35 @@
   border-bottom: 1px solid var(--border-subtle);
 }
 
+.library-repo-link {
+  display: flex;
+  width: fit-content;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-decoration: underline;
+  text-decoration-color: var(--accent-primary);
+  text-underline-offset: 6px;
+}
+
+.library-repo-link svg {
+  flex: 0 0 auto;
+  transition: transform 180ms ease-out;
+}
+
+.library-repo-link:hover {
+  color: var(--accent-hover);
+}
+
+.library-repo-link:hover svg {
+  transform: translate(2px, -2px);
+}
+
 .library-list {
   border-bottom: 1px solid var(--border-subtle);
 }
