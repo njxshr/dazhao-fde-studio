@@ -1,0 +1,217 @@
+/* Optional white theme. The original editorial palette remains the default. */
+:root[data-theme='white'] {
+  color-scheme: light;
+  --surface-page: oklch(0.995 0.002 139);
+  --surface-raised: oklch(0.995 0.002 139);
+  --surface-muted: oklch(0.975 0.004 139);
+  --border-subtle: oklch(0.88 0.008 139);
+  --dialog-bg: oklch(0.995 0.002 139);
+  --accent-text: oklch(0.47 0.12 40);
+}
+
+.theme-toggle {
+  display: inline-flex;
+  min-width: 44px;
+  min-height: 44px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 160ms ease-out, opacity 160ms ease-out;
+}
+
+.theme-toggle > span {
+  display: none;
+  font-size: 13px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.theme-toggle:hover {
+  color: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+.theme-toggle:active {
+  transform: translateY(0) scale(0.96);
+}
+
+.theme-toggle[aria-pressed='true'] {
+  background: var(--pine-950);
+  color: var(--sage-50);
+  border-color: var(--pine-950);
+}
+
+.theme-toggle[aria-pressed='true']:hover {
+  background: var(--pine-800);
+  color: var(--sage-50);
+}
+
+:root[data-theme='white'] .opening-sequence {
+  background: var(--surface-page);
+  color: var(--text-primary);
+}
+
+:root[data-theme='white'] .opening-grid {
+  background-image:
+    linear-gradient(oklch(0.38 0.045 176 / 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.38 0.045 176 / 0.07) 1px, transparent 1px);
+}
+
+:root[data-theme='white'] .opening-mark {
+  background: var(--pine-950);
+  color: var(--sage-50);
+}
+
+:root[data-theme='white'] .opening-wordmark > span,
+:root[data-theme='white'] .opening-index {
+  color: var(--text-secondary);
+}
+
+:root[data-theme='white'] .opening-track {
+  background: var(--border-subtle);
+}
+
+:root[data-theme='white'] .method-section,
+:root[data-theme='white'] .contact-section {
+  background: var(--surface-page);
+  color: var(--text-primary);
+}
+
+:root[data-theme='white'] .method-section {
+  border-block: 1px solid var(--border-subtle);
+}
+
+:root[data-theme='white'] .method-section .section-heading-dark > p,
+:root[data-theme='white'] .method-statement p,
+:root[data-theme='white'] .method-output h4 {
+  color: var(--text-secondary);
+}
+
+:root[data-theme='white'] .method-tabs,
+:root[data-theme='white'] .method-tabs button,
+:root[data-theme='white'] .method-tabs button:last-child,
+:root[data-theme='white'] .method-output {
+  border-color: var(--border-subtle);
+}
+
+:root[data-theme='white'] .method-tabs button {
+  color: var(--text-secondary);
+}
+
+:root[data-theme='white'] .method-tabs button.active {
+  background: var(--surface-muted);
+  color: var(--text-primary);
+}
+
+:root[data-theme='white'] .method-tabs button.active i {
+  background: var(--accent-text);
+}
+
+:root[data-theme='white'] .method-panel {
+  background: var(--surface-muted);
+  border: 1px solid var(--border-subtle);
+}
+
+:root[data-theme='white'] .method-count,
+:root[data-theme='white'] .method-output li svg {
+  color: var(--accent-text);
+}
+
+:root[data-theme='white'] .contact-main > p:not(.section-label),
+:root[data-theme='white'] .contact-card-label,
+:root[data-theme='white'] .contact-secondary button,
+:root[data-theme='white'] .contact-secondary a,
+:root[data-theme='white'] .collaboration-process h3,
+:root[data-theme='white'] .collaboration-process > p,
+:root[data-theme='white'] .wechat-presence {
+  color: var(--text-secondary);
+}
+
+:root[data-theme='white'] .contact-topics span {
+  color: var(--text-secondary);
+  border-color: var(--border-subtle);
+}
+
+:root[data-theme='white'] .contact-card {
+  background: var(--surface-muted);
+  border-color: var(--border-subtle);
+}
+
+:root[data-theme='white'] .email-link {
+  color: var(--accent-text);
+}
+
+:root[data-theme='white'] .contact-secondary,
+:root[data-theme='white'] .collaboration-process {
+  border-color: var(--border-subtle);
+}
+
+:root[data-theme='white'] .collaboration-process li,
+:root[data-theme='white'] .wechat-presence strong {
+  color: var(--text-primary);
+}
+
+:root[data-theme='white'] .contact-section .button-ghost-light {
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+}
+
+:root[data-theme='white'] .contact-section .button-ghost-light:hover {
+  border-color: var(--accent-primary);
+}
+
+:root[data-theme='white'] .site-footer {
+  background: var(--surface-page);
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+}
+
+:root[data-theme='white'] .footer-brand .brand-mark {
+  background: var(--pine-950);
+  color: var(--sage-50);
+}
+
+:root[data-theme='white'] .footer-brand .brand-mark > span {
+  border-color: var(--surface-page);
+}
+
+:root[data-theme='white'] .footer-brand small,
+:root[data-theme='white'] .footer-note {
+  color: var(--text-secondary);
+}
+
+@media (max-width: 374px) {
+  .header-inner {
+    gap: 8px;
+  }
+
+  .brand {
+    gap: 8px;
+  }
+
+  .brand-name {
+    font-size: 15px;
+    letter-spacing: 0.03em;
+  }
+
+  .brand-name small {
+    font-size: 10px;
+  }
+}
+
+@media (min-width: 600px) {
+  .theme-toggle {
+    padding-inline: 13px;
+  }
+
+  .theme-toggle > span {
+    display: inline;
+  }
+}
