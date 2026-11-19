@@ -923,3 +923,69 @@
   86% { transform: scale(1.35); }
   92% { transform: scale(0.9); }
 }
+
+
+/* Pointer-responsive scale field: three layers, one passive listener, no idle RAF. */
+.pointer-scales {
+  --pointer-x: 50vw;
+  --pointer-y: 42vh;
+  --scale-shift-x: 0px;
+  --scale-shift-y: 0px;
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.pointer-scales-base,
+.pointer-scales-lens {
+  position: absolute;
+  inset: 0;
+}
+
+.pointer-scales-base {
+  inset: -40px;
+  background-image:
+    linear-gradient(var(--scale-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--scale-line) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: linear-gradient(to bottom, transparent, oklch(0 0 0 / 0.7) 18%, oklch(0 0 0 / 0.2) 85%, transparent);
+  opacity: 0.42;
+}
+
+.pointer-scales-lens {
+  opacity: 0;
+  mask-image: radial-gradient(circle 230px at var(--pointer-x) var(--pointer-y), oklch(0 0 0) 0%, oklch(0 0 0 / 0.8) 42%, transparent 100%);
+  transition: opacity 180ms ease-out;
+}
+
+.pointer-scales-plane {
+  position: absolute;
+  inset: -52px;
+  background-image:
+    linear-gradient(var(--scale-active) 1px, transparent 1px),
+    linear-gradient(90deg, var(--scale-active) 1px, transparent 1px),
+    linear-gradient(135deg, var(--scale-fill) 25%, transparent 25% 75%, var(--scale-fill) 75%);
+  background-size: 36px 36px;
+  transform: translate3d(var(--scale-shift-x), var(--scale-shift-y), 0) scale(1.025);
+  transition: transform 100ms ease-out;
+  will-change: transform;
+}
+
+.pointer-scales[data-active='true'] .pointer-scales-lens {
+  opacity: 1;
+}
+
+@media (max-width: 600px) {
+  .pointer-scales-base,
+  .pointer-scales-plane {
+    background-size: 30px 30px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pointer-scales {
+    display: none !important;
+  }
+}

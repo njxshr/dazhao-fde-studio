@@ -1,12 +1,56 @@
-/* Optional white theme. The original editorial palette remains the default. */
+/* Semantic dark/light surfaces and the studio's rounded geometry. */
 :root[data-theme='white'] {
   color-scheme: light;
-  --surface-page: oklch(0.995 0.002 139);
-  --surface-raised: oklch(0.995 0.002 139);
-  --surface-muted: oklch(0.975 0.004 139);
-  --border-subtle: oklch(0.88 0.008 139);
-  --dialog-bg: oklch(0.995 0.002 139);
-  --accent-text: oklch(0.47 0.12 40);
+  --surface-page: oklch(0.985 0.006 139);
+  --surface-raised: oklch(0.995 0.003 139);
+  --surface-muted: oklch(0.95 0.012 139);
+  --surface-inverse: oklch(0.975 0.008 139);
+  --surface-card: oklch(0.995 0.003 139);
+  --surface-demo: oklch(0.945 0.014 149);
+  --surface-selected: oklch(0.925 0.018 149);
+  --text-primary: var(--ink-900);
+  --text-secondary: var(--ink-700);
+  --text-inverse: var(--ink-900);
+  --text-inverse-secondary: var(--ink-700);
+  --accent-primary: var(--signal-500);
+  --accent-hover: var(--signal-600);
+  --border-subtle: var(--line);
+  --border-inverse: var(--line);
+  --button-bg: var(--pine-950);
+  --button-bg-hover: var(--pine-800);
+  --button-text: var(--sage-50);
+  --button-accent-bg: var(--signal-500);
+  --button-accent-text: var(--pine-950);
+  --dialog-bg: var(--paper);
+  --brand-inverse-bg: var(--pine-950);
+  --brand-inverse-text: var(--sage-50);
+  --scale-line: oklch(0.38 0.045 176 / 0.11);
+  --scale-active: oklch(0.55 0.075 155 / 0.46);
+  --scale-fill: oklch(0.61 0.07 155 / 0.12);
+  --shadow-soft: oklch(0.25 0.035 176 / 0.1);
+}
+
+#root {
+  position: relative;
+  isolation: isolate;
+}
+
+main,
+.site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+body,
+.site-header,
+.method-section,
+.contact-section,
+.site-footer,
+.portrait-composition,
+.method-panel,
+.contact-card,
+.translator-demo {
+  transition: background-color 240ms ease-out, color 240ms ease-out, border-color 240ms ease-out;
 }
 
 .theme-toggle {
@@ -18,12 +62,12 @@
   justify-content: center;
   gap: 7px;
   padding: 0;
-  background: transparent;
+  background: var(--surface-raised);
   color: var(--text-secondary);
   border: 1px solid var(--border-subtle);
-  border-radius: 999px;
+  border-radius: var(--radius-small);
   cursor: pointer;
-  transition: transform 160ms ease-out, opacity 160ms ease-out;
+  transition: transform 160ms ease-out, background-color 200ms ease-out, color 200ms ease-out;
 }
 
 .theme-toggle > span {
@@ -53,6 +97,137 @@
   color: var(--sage-50);
 }
 
+/* Every formerly inverse surface follows the active theme. */
+.method-section,
+.contact-section,
+.site-footer {
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+  border-color: var(--border-inverse);
+}
+
+.portrait-composition {
+  background: var(--surface-inverse);
+  border: 1px solid var(--border-inverse);
+}
+
+.portrait-topline,
+.portrait-caption {
+  color: var(--text-inverse);
+}
+
+.portrait-caption > span,
+.section-heading-dark > p,
+.method-statement p,
+.method-output h4,
+.method-tabs button,
+.demo-brand small,
+.demo-language,
+.demo-result,
+.demo-foot,
+.contact-main > p:not(.section-label),
+.contact-card-label,
+.contact-secondary button,
+.contact-secondary a,
+.collaboration-process h3,
+.collaboration-process > p,
+.wechat-presence,
+.footer-brand small {
+  color: var(--text-inverse-secondary);
+}
+
+.portrait-media {
+  background: var(--surface-muted);
+}
+
+.method-tabs,
+.method-tabs button,
+.method-tabs button:last-child,
+.method-output,
+.contact-card,
+.contact-secondary,
+.collaboration-process,
+.demo-window-bar,
+.demo-language {
+  border-color: var(--border-inverse);
+}
+
+.method-panel,
+.contact-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border-inverse);
+}
+
+.method-tabs button.active {
+  background: var(--surface-selected);
+  color: var(--text-inverse);
+}
+
+.method-tabs button.active i {
+  background: var(--accent-primary);
+}
+
+.method-count,
+.method-output li svg {
+  color: var(--accent-primary);
+}
+
+.translator-demo {
+  background: var(--surface-demo);
+  color: var(--text-inverse);
+}
+
+.demo-window-bar > span {
+  background: var(--text-inverse-secondary);
+}
+
+.demo-window-bar > span:first-child {
+  background: var(--accent-primary);
+}
+
+.contact-topics span {
+  color: var(--text-inverse-secondary);
+  border-color: var(--border-inverse);
+}
+
+.collaboration-process li,
+.wechat-presence strong {
+  color: var(--text-inverse);
+}
+
+.contact-section .button-ghost-light {
+  color: var(--text-inverse);
+  border-color: var(--border-inverse);
+}
+
+.contact-section .button-ghost-light:hover {
+  border-color: var(--accent-primary);
+}
+
+.button-dark {
+  background: var(--button-bg);
+  color: var(--button-text);
+}
+
+.button-dark:hover {
+  background: var(--button-bg-hover);
+  color: var(--button-text);
+}
+
+.button-signal:hover {
+  color: var(--button-accent-text);
+}
+
+.footer-brand .brand-mark {
+  background: var(--brand-inverse-bg);
+  color: var(--brand-inverse-text);
+}
+
+.footer-brand .brand-mark > span {
+  border-color: var(--surface-inverse);
+}
+
+/* The opening follows the same theme without blocking the page. */
 :root[data-theme='white'] .opening-sequence {
   background: var(--surface-page);
   color: var(--text-primary);
@@ -60,8 +235,8 @@
 
 :root[data-theme='white'] .opening-grid {
   background-image:
-    linear-gradient(oklch(0.38 0.045 176 / 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, oklch(0.38 0.045 176 / 0.07) 1px, transparent 1px);
+    linear-gradient(var(--scale-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--scale-line) 1px, transparent 1px);
 }
 
 :root[data-theme='white'] .opening-mark {
@@ -78,113 +253,164 @@
   background: var(--border-subtle);
 }
 
-:root[data-theme='white'] .method-section,
-:root[data-theme='white'] .contact-section {
-  background: var(--surface-page);
-  color: var(--text-primary);
+/* Apple-like rounded rectangles, with squircle enhancement where supported. */
+.skip-link,
+.button,
+.project-open,
+.icon-button,
+.theme-toggle,
+.back-to-top,
+.header-contact-button,
+.text-link-button,
+.contact-secondary button,
+.contact-secondary a,
+.library-repo-link,
+.wechat-mail-link {
+  border-radius: var(--radius-small);
 }
 
-:root[data-theme='white'] .method-section {
-  border-block: 1px solid var(--border-subtle);
+.brand-mark,
+.opening-mark,
+.demo-brand > span {
+  border-radius: var(--radius-small);
 }
 
-:root[data-theme='white'] .method-section .section-heading-dark > p,
-:root[data-theme='white'] .method-statement p,
-:root[data-theme='white'] .method-output h4 {
-  color: var(--text-secondary);
+.brand-mark > span,
+.opening-mark > span {
+  border-radius: 4px;
 }
 
-:root[data-theme='white'] .method-tabs,
-:root[data-theme='white'] .method-tabs button,
-:root[data-theme='white'] .method-tabs button:last-child,
-:root[data-theme='white'] .method-output {
-  border-color: var(--border-subtle);
+.portrait-composition {
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  clip-path: none;
+  box-shadow: 0 24px 64px var(--shadow-soft);
 }
 
-:root[data-theme='white'] .method-tabs button {
-  color: var(--text-secondary);
+.portrait-composition::after {
+  display: none;
 }
 
-:root[data-theme='white'] .method-tabs button.active {
-  background: var(--surface-muted);
-  color: var(--text-primary);
+.portrait-media {
+  border-radius: 22px;
 }
 
-:root[data-theme='white'] .method-tabs button.active i {
-  background: var(--accent-text);
+.portrait-tag {
+  border-radius: var(--radius-small);
+  box-shadow: 0 8px 24px var(--shadow-soft);
 }
 
-:root[data-theme='white'] .method-panel {
-  background: var(--surface-muted);
+.method-tabs {
+  padding: 6px;
+  overflow: hidden;
+  background: var(--surface-card);
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-medium);
+}
+
+.method-tabs button,
+.method-tabs button:last-child {
+  padding-inline: 14px;
+  border: 0;
+  border-radius: var(--radius-small);
+}
+
+.method-tabs button::after {
+  display: none;
+}
+
+.method-panel,
+.featured-project,
+.project-row,
+.book-row,
+.contact-card,
+.dialog-note,
+.qr-frame {
+  border-radius: var(--radius-large);
+}
+
+.featured-project,
+.contact-card {
+  box-shadow: 0 18px 48px var(--shadow-soft);
+}
+
+.project-list,
+.library-list {
+  display: grid;
+  gap: 16px;
+  border-bottom: 0;
+}
+
+.project-row,
+.book-row {
+  padding: 24px;
+  background: var(--surface-raised);
   border: 1px solid var(--border-subtle);
 }
 
-:root[data-theme='white'] .method-count,
-:root[data-theme='white'] .method-output li svg {
-  color: var(--accent-text);
+.interactive-surface::before,
+.contact-card::after {
+  border-radius: inherit;
 }
 
-:root[data-theme='white'] .contact-main > p:not(.section-label),
-:root[data-theme='white'] .contact-card-label,
-:root[data-theme='white'] .contact-secondary button,
-:root[data-theme='white'] .contact-secondary a,
-:root[data-theme='white'] .collaboration-process h3,
-:root[data-theme='white'] .collaboration-process > p,
-:root[data-theme='white'] .wechat-presence {
-  color: var(--text-secondary);
+.contact-card::after {
+  inset: 0;
 }
 
-:root[data-theme='white'] .contact-topics span {
-  color: var(--text-secondary);
-  border-color: var(--border-subtle);
+.mobile-nav {
+  border-radius: 0 0 var(--radius-large) var(--radius-large);
 }
 
-:root[data-theme='white'] .contact-card {
-  background: var(--surface-muted);
-  border-color: var(--border-subtle);
+.back-to-top {
+  padding-inline: 14px;
+  border: 1px solid var(--border-inverse);
 }
 
-:root[data-theme='white'] .email-link {
-  color: var(--accent-text);
+.project-dialog,
+.wechat-dialog {
+  border-radius: var(--radius-large);
+  box-shadow: 0 28px 90px oklch(0.1 0.025 176 / 0.35);
 }
 
-:root[data-theme='white'] .contact-secondary,
-:root[data-theme='white'] .collaboration-process {
-  border-color: var(--border-subtle);
+.toast,
+.noscript {
+  border-radius: var(--radius-medium);
+  box-shadow: 0 16px 40px var(--shadow-soft);
 }
 
-:root[data-theme='white'] .collaboration-process li,
-:root[data-theme='white'] .wechat-presence strong {
-  color: var(--text-primary);
+@supports (corner-shape: squircle) {
+  .button,
+  .project-open,
+  .icon-button,
+  .theme-toggle,
+  .brand-mark,
+  .portrait-composition,
+  .method-panel,
+  .featured-project,
+  .project-row,
+  .book-row,
+  .contact-card,
+  .project-dialog,
+  .wechat-dialog {
+    corner-shape: squircle;
+  }
 }
 
-:root[data-theme='white'] .contact-section .button-ghost-light {
-  color: var(--text-primary);
-  border-color: var(--border-subtle);
+@media (min-width: 600px) {
+  .theme-toggle {
+    padding-inline: 13px;
+  }
+
+  .theme-toggle > span {
+    display: inline;
+  }
 }
 
-:root[data-theme='white'] .contact-section .button-ghost-light:hover {
-  border-color: var(--accent-primary);
-}
-
-:root[data-theme='white'] .site-footer {
-  background: var(--surface-page);
-  color: var(--text-primary);
-  border-color: var(--border-subtle);
-}
-
-:root[data-theme='white'] .footer-brand .brand-mark {
-  background: var(--pine-950);
-  color: var(--sage-50);
-}
-
-:root[data-theme='white'] .footer-brand .brand-mark > span {
-  border-color: var(--surface-page);
-}
-
-:root[data-theme='white'] .footer-brand small,
-:root[data-theme='white'] .footer-note {
-  color: var(--text-secondary);
+@media (min-width: 768px) {
+  .project-row,
+  .book-row {
+    padding: 28px;
+  }
 }
 
 @media (max-width: 374px) {
@@ -206,12 +432,28 @@
   }
 }
 
-@media (min-width: 600px) {
-  .theme-toggle {
-    padding-inline: 13px;
-  }
 
-  .theme-toggle > span {
-    display: inline;
-  }
+/* Small text keeps a darker accent in the light theme for readable contrast. */
+:root[data-theme='white'] {
+  --accent-hover: oklch(0.5 0.14 40);
+  --accent-text: oklch(0.5 0.14 40);
+}
+
+:root[data-theme='white'] .method-tabs button.active {
+  color: var(--text-primary);
+}
+
+:root[data-theme='white'] .method-tabs button.active i,
+:root[data-theme='white'] .method-count,
+:root[data-theme='white'] .method-output li svg,
+:root[data-theme='white'] .email-link,
+:root[data-theme='white'] .contact-secondary button:hover,
+:root[data-theme='white'] .contact-secondary a:hover,
+:root[data-theme='white'] .back-to-top:hover {
+  color: var(--accent-text);
+}
+
+.button-signal:hover {
+  background: var(--accent-primary);
+  color: var(--button-accent-text);
 }
