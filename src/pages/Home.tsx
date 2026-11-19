@@ -15,12 +15,14 @@ import {
   MessageSquare,
   Network,
   QrCode,
+  Sun,
   X,
 } from 'lucide-react'
 import { introText, libraryBooks, methodSteps, projects, timeline } from '../data'
 import type { Project } from '../data'
 import '../App.css'
 import '../motion.css'
+import '../themes.css'
 
 const email = 'lizhao086@126.com'
 const wechatId = 'njxshr'
@@ -163,8 +165,20 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [toast, setToast] = useState('')
   const [showIntro, setShowIntro] = useState(() => !window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  const [theme, setTheme] = useState<'brand' | 'white'>(() => document.documentElement.dataset.theme === 'white' ? 'white' : 'brand')
   const toastTimer = useRef<number | undefined>(undefined)
   const progressRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (theme === 'white') document.documentElement.dataset.theme = 'white'
+    else document.documentElement.removeAttribute('data-theme')
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'white' ? '#fcfdfc' : '#173c35')
+    try {
+      localStorage.setItem('dazhao-fde-theme', theme)
+    } catch {
+      // The selected theme still works when browser storage is unavailable.
+    }
+  }, [theme])
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -293,6 +307,17 @@ export default function Home() {
           <nav className="desktop-nav" aria-label="主要导航">
             {navItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
           </nav>
+          <button
+            className="theme-toggle"
+            type="button"
+            aria-label="白色主题"
+            aria-pressed={theme === 'white'}
+            title={theme === 'white' ? '白色主题已开启，点击恢复品牌主题' : '点击切换到白色主题'}
+            onClick={() => setTheme((current) => current === 'white' ? 'brand' : 'white')}
+          >
+            <Sun size={17} aria-hidden="true" />
+            <span>白色主题</span>
+          </button>
           <button className="header-contact header-contact-button" type="button" onClick={() => setWechatOpen(true)}>
             来聊聊 <ArrowUpRight size={17} aria-hidden="true" />
           </button>
