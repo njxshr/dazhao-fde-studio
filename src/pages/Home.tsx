@@ -591,7 +591,6 @@ export default function Home() {
       <footer className="site-footer">
         <div className="site-shell footer-inner">
           <div className="footer-brand"><span className="brand-mark" aria-hidden="true">钊<span /></span><p>大钊 FDE 工作室<small>让复杂系统更容易被人使用</small></p></div>
-          <p className="footer-note">内容基于个人画像 V2.2<br />区分公开作品、实践材料与探索方向</p>
           <a className="back-to-top" href="#top">回到顶部 <ArrowUp size={17} aria-hidden="true" /></a>
         </div>
       </footer>
