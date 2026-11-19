@@ -925,17 +925,36 @@
 }
 
 
-/* Pointer-responsive scale field: three layers, one passive listener, no idle RAF. */
+/* A living, site-wide scale texture with a pointer-tracked relief lens. */
 .pointer-scales {
   --pointer-x: 50vw;
   --pointer-y: 42vh;
   --scale-shift-x: 0px;
   --scale-shift-y: 0px;
-  position: fixed;
-  z-index: 0;
-  inset: 0;
-  overflow: hidden;
+  position: static;
   pointer-events: none;
+}
+
+#root .pointer-scales-base,
+#root .pointer-scales-lens {
+  position: fixed;
+}
+
+.pointer-scales-base {
+  z-index: 0;
+}
+
+.pointer-scales-lens {
+  z-index: 2;
+}
+
+.pointer-scales-base,
+.pointer-scales-base::after,
+.pointer-scales-plane {
+  background: var(--scale-line);
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='64' viewBox='0 0 72 64'%3E%3Cg fill='none' stroke='white' stroke-width='1'%3E%3Cpath d='M0 0Q18 26 36 0Q54 26 72 0M-36 32Q-18 58 0 32Q18 58 36 32Q54 58 72 32Q90 58 108 32'/%3E%3Cpath d='M18 1v6M54 1v6M0 33v6M36 33v6M72 33v6' stroke-linecap='round'/%3E%3Ccircle cx='18' cy='12' r='1'/%3E%3Ccircle cx='54' cy='12' r='1'/%3E%3Ccircle cx='0' cy='44' r='1'/%3E%3Ccircle cx='36' cy='44' r='1'/%3E%3C/g%3E%3C/svg%3E");
+  mask-repeat: repeat;
+  mask-size: 72px 64px;
 }
 
 .pointer-scales-base,
@@ -945,30 +964,50 @@
 }
 
 .pointer-scales-base {
-  inset: -40px;
-  background-image:
-    linear-gradient(var(--scale-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--scale-line) 1px, transparent 1px);
-  background-size: 36px 36px;
-  mask-image: linear-gradient(to bottom, transparent, oklch(0 0 0 / 0.7) 18%, oklch(0 0 0 / 0.2) 85%, transparent);
-  opacity: 0.42;
+  inset: -96px;
+  opacity: 0.9;
+  animation: texture-current 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.pointer-scales-base::after {
+  position: absolute;
+  inset: -36px;
+  background: var(--scale-fill);
+  content: "";
+  mask-position: 36px 32px;
+  animation: texture-countercurrent 34s ease-in-out infinite alternate;
 }
 
 .pointer-scales-lens {
   opacity: 0;
-  mask-image: radial-gradient(circle 230px at var(--pointer-x) var(--pointer-y), oklch(0 0 0) 0%, oklch(0 0 0 / 0.8) 42%, transparent 100%);
+  mask-image: radial-gradient(circle 210px at var(--pointer-x) var(--pointer-y), oklch(0 0 0) 0%, oklch(0 0 0 / 0.96) 38%, oklch(0 0 0 / 0.56) 67%, transparent 100%);
   transition: opacity 180ms ease-out;
+}
+
+.pointer-scales-lens::before,
+.pointer-scales-lens::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+}
+
+.pointer-scales-lens::before {
+  background: radial-gradient(circle 190px at var(--pointer-x) var(--pointer-y), var(--scale-fill), transparent 76%);
+}
+
+.pointer-scales-lens::after {
+  background: repeating-radial-gradient(circle 190px at var(--pointer-x) var(--pointer-y), transparent 0 46px, var(--scale-line) 47px 48px, transparent 49px 82px);
+  opacity: 0.75;
 }
 
 .pointer-scales-plane {
   position: absolute;
-  inset: -52px;
-  background-image:
-    linear-gradient(var(--scale-active) 1px, transparent 1px),
-    linear-gradient(90deg, var(--scale-active) 1px, transparent 1px),
-    linear-gradient(135deg, var(--scale-fill) 25%, transparent 25% 75%, var(--scale-fill) 75%);
-  background-size: 36px 36px;
-  transform: translate3d(var(--scale-shift-x), var(--scale-shift-y), 0) scale(1.025);
+  inset: -84px;
+  background: var(--scale-active);
+  mask-position: 12px 8px;
+  mask-size: 58px 52px;
+  transform: translate3d(var(--scale-shift-x), var(--scale-shift-y), 0) scale(1.045);
   transition: transform 100ms ease-out;
   will-change: transform;
 }
@@ -977,15 +1016,46 @@
   opacity: 1;
 }
 
+/* The translucent section surfaces let the same texture continue down the page. */
+.thesis-band {
+  background: color-mix(in oklab, var(--surface-raised) 95%, transparent 5%);
+}
+
+.method-section,
+.contact-section,
+.site-footer {
+  background: color-mix(in oklab, var(--surface-inverse) 96%, transparent 4%);
+}
+
+.journey-section {
+  background: color-mix(in oklab, var(--surface-muted) 95%, transparent 5%);
+}
+
 @media (max-width: 600px) {
-  .pointer-scales-base,
-  .pointer-scales-plane {
-    background-size: 30px 30px;
+  .pointer-scales-base {
+    mask-size: 58px 52px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pointer-scales {
-    display: none !important;
+  .pointer-scales-base,
+  .pointer-scales-base::after {
+    animation: none;
+    transform: none;
+    will-change: auto;
   }
+
+  .pointer-scales-lens {
+    display: none;
+  }
+}
+
+@keyframes texture-current {
+  from { opacity: 0.62; transform: translate3d(-12px, -8px, 0) rotate(-0.35deg); }
+  to { opacity: 1; transform: translate3d(28px, 18px, 0) rotate(0.35deg); }
+}
+
+@keyframes texture-countercurrent {
+  from { opacity: 0.45; transform: translate3d(18px, -10px, 0) scale(1); }
+  to { opacity: 0.85; transform: translate3d(-18px, 16px, 0) scale(1.025); }
 }

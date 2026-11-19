@@ -24,9 +24,9 @@
   --dialog-bg: var(--paper);
   --brand-inverse-bg: var(--pine-950);
   --brand-inverse-text: var(--sage-50);
-  --scale-line: oklch(0.38 0.045 176 / 0.11);
-  --scale-active: oklch(0.55 0.075 155 / 0.46);
-  --scale-fill: oklch(0.61 0.07 155 / 0.12);
+  --scale-line: oklch(0.38 0.045 176 / 0.15);
+  --scale-active: oklch(0.48 0.075 155 / 0.64);
+  --scale-fill: oklch(0.61 0.07 155 / 0.18);
   --shadow-soft: oklch(0.25 0.035 176 / 0.1);
 }
 
